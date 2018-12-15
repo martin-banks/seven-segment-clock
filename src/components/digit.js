@@ -38,7 +38,7 @@ class Digit extends React.Component {
               .map((p, i) => <div
                   className={ `segment segment__${i}` }
                   key={`segment-${i}`}
-                  style={{ background: p ? '#ddd' : '#444' }}
+                  style={{ opacity: p ? 0.9 : 0.1 }}
                 ></div>
               )
           }
@@ -63,18 +63,18 @@ class Digit extends React.Component {
           display: inline-block;
           width: 100px;
           height: 200px;
-          background: #333;
           padding: 12px;
         }
 
         .segment {
+          transition: opacity 250ms;
           position: absolute;
           display: block;
           top: 0;
           left: 0;
           width: 10px;
           height: 60px;
-          background: #666;
+          background: white;
           transform-origin: 0 0;
           color: white;
           border-radius: 10px;

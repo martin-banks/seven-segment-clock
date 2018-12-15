@@ -8,15 +8,26 @@ class App extends Component {
     super(props)
     this.state = {
       number: 0,
-      date: 0,
+      dateNow: 0,
+      time: {
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      }
     }
     this.counter = this.counter.bind(this)
     this.updateDate = this.updateDate.bind(this)
   }
 
   updateDate () {
+    const d = new Date()
     this.setState({
-      date: Date.now(),
+      dateNow: Date.now(),
+      time: {
+        hours: d.getHours(),
+        minutes: `0${d.getMinutes()}`.slice(-2),
+        seconds: `0${d.getSeconds()}`.slice(-2),
+      }
     })
   }
 
@@ -33,7 +44,7 @@ class App extends Component {
 
   componentDidMount () {
     setInterval(this.counter, 1000)
-    // window.requestAnimationFrame(this.updateDate)
+    // window.requestAnimationFrame(this.counter)
   }
 
   render () {
@@ -41,14 +52,72 @@ class App extends Component {
       <div className="App">
         {/* <Digit number={ this.state.number } /> */}
 
-        {
-          `${this.state.date}`.split('')
+        <div className="clock">
+          {
+            `${this.state.time.hours}`
+              .split('')
+              .map((n, i) => <Digit
+                  key={ `digit-${i}` }
+                  number={ parseInt(n, 10) }
+                />
+              )
+          }
+
+          <span>:</span>
+
+          {
+            `${this.state.time.minutes}`
+            .split('')
+            .map((n, i) => <Digit
+            key={ `digit-${i}` }
+            number={ parseInt(n, 10) }
+            />
+            )
+          }
+          <span>:</span>
+          {
+            `${this.state.time.seconds}`
+              .split('')
+              .map((n, i) => <Digit
+                  key={ `digit-${i}` }
+                  number={ parseInt(n, 10) }
+                />
+              )
+          }
+        </div>
+
+
+
+        {/* {
+          `${this.state.dateNow}`.split('')
             .map((n, i) => <Digit
                 key={ `digit-${i}` }
                 number={ parseInt(n, 10) }
               />
             )
-        }
+        } */}
+
+        <style jsx>{`
+          .App {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+            background: #222;
+          }
+
+          span {
+            position: relative;
+            display: inline-block;
+            color: white;
+            font-size: 60px;
+            line-height: 100px;
+            height: 100px;
+            padding: 20px
+          }  
+
+        `}</style>
       </div>
     )
   }
