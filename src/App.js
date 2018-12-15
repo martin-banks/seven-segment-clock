@@ -1,28 +1,35 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import logo from './logo.svg'
+import './App.css'
+
+import Digit from './components/digit'
 
 class App extends Component {
-  render() {
+  constructor (props) {
+    super(props)
+    this.state = {
+      number: 0,
+    }
+    this.counter = this.counter.bind(this)
+  }
+
+  counter () {
+    this.setState({
+      number: this.state.number === 9 ? 0 : this.state.number + 1,
+    })
+  }
+
+  componentDidMount () {
+    setInterval(this.counter, 1000)
+  }
+
+  render () {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Digit number={ this.state.number } />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
