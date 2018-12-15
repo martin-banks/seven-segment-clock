@@ -23,7 +23,7 @@ class Digit extends React.Component {
 
   render () {
     return <>
-      <div>
+      <div className="digit">
         <div className="wrapper">
           {/* <div className="segment segment__a">a</div>
           <div className="segment segment__b">b</div>
@@ -38,7 +38,7 @@ class Digit extends React.Component {
               .map((p, i) => <div
                   className={ `segment segment__${i}` }
                   key={`segment-${i}`}
-                  style={{ background: p ? 'red' : '#555' }}
+                  style={{ background: p ? '#ddd' : '#444' }}
                 ></div>
               )
           }
@@ -51,9 +51,16 @@ class Digit extends React.Component {
           box-sizing: border-box;
         }
 
+        .digit {
+          display: inline-block;
+          vertical-align: top;
+          margin: 0;
+          padding: 0;
+        }
+
         .wrapper {
           position: relative;
-          display: block;
+          display: inline-block;
           width: 100px;
           height: 200px;
           background: #333;
