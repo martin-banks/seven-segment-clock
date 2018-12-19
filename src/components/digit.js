@@ -1,7 +1,5 @@
 import React from 'react'
 
-import Segment from './segment'
-
 const patterns = [
 // A  B  C  D  E  F  G
   [1, 1, 1, 1, 1, 1, 0], // 0
@@ -30,7 +28,7 @@ class Digit extends React.Component {
               .map((p, i) => <div
                   className={ `segment segment__${i}` }
                   key={`segment-${i}`}
-                  style={{ opacity: p ? 0.9 : 0.1 }}
+                  style={{ opacity: p ? 0.9 : 0.05 }}
                 ></div>
               )
           }
