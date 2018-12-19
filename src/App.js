@@ -44,58 +44,30 @@ class App extends Component {
 
   componentDidMount () {
     setInterval(this.counter, 1000)
-    // window.requestAnimationFrame(this.counter)
   }
 
   render () {
     return (
       <div className="App">
-        {/* <Digit number={ this.state.number } /> */}
-
         <div className="clock">
           {
             `${this.state.time.hours}`
               .split('')
-              .map((n, i) => <Digit
-                  key={ `digit-${i}` }
-                  number={ parseInt(n, 10) }
-                />
-              )
+              .map((n, i) => <Digit key={ `digit-${i}` } number={ parseInt(n, 10) } />)
           }
-
-          <span>:</span>
-
+          <span className={ parseInt(this.state.time.seconds, 10) % 2 ? 'show' : 'hide' }>:</span>
           {
             `${this.state.time.minutes}`
-            .split('')
-            .map((n, i) => <Digit
-            key={ `digit-${i}` }
-            number={ parseInt(n, 10) }
-            />
-            )
+              .split('')
+              .map((n, i) => <Digit key={ `digit-${i}` } number={ parseInt(n, 10) } />)
           }
-          <span>:</span>
+          <span className={ parseInt(this.state.time.seconds, 10) % 2 ? 'show' : 'hide' }>:</span>
           {
             `${this.state.time.seconds}`
               .split('')
-              .map((n, i) => <Digit
-                  key={ `digit-${i}` }
-                  number={ parseInt(n, 10) }
-                />
-              )
+              .map((n, i) => <Digit key={ `digit-${i}` } number={ parseInt(n, 10) } />)
           }
         </div>
-
-
-
-        {/* {
-          `${this.state.dateNow}`.split('')
-            .map((n, i) => <Digit
-                key={ `digit-${i}` }
-                number={ parseInt(n, 10) }
-              />
-            )
-        } */}
 
         <style jsx>{`
           .App {
@@ -108,6 +80,7 @@ class App extends Component {
           }
 
           span {
+            transition: opacity 200ms;
             position: relative;
             display: inline-block;
             color: white;
@@ -115,7 +88,13 @@ class App extends Component {
             line-height: 100px;
             height: 100px;
             padding: 20px
-          }  
+          }
+          .show {
+            opacity: 1;
+          }
+          .hide {
+            opacity: 0;
+          }
 
         `}</style>
       </div>
