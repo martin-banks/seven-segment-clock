@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 
 import Digit from './components/digit'
+import StylingUI from './components/styling-ui'
 
 class App extends Component {
   constructor (props) {
@@ -69,6 +70,8 @@ class App extends Component {
           }
         </div>
 
+        <StylingUI />
+
         <style jsx>{`
           .App {
             display: flex;
@@ -76,7 +79,7 @@ class App extends Component {
             justify-content: center;
             width: 100vw;
             height: 100vh;
-            background: #222;
+            background: linear-gradient(#111, #333);
           }
 
           span {
