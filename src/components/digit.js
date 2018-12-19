@@ -25,14 +25,6 @@ class Digit extends React.Component {
     return <>
       <div className="digit">
         <div className="wrapper">
-          {/* <div className="segment segment__a">a</div>
-          <div className="segment segment__b">b</div>
-          <div className="segment segment__c">c</div>
-          <div className="segment segment__d">d</div>
-          <div className="segment segment__e">e</div>
-          <div className="segment segment__f">f</div>
-          <div className="segment segment__g">g</div> */}
-
           {
             patterns[this.props.number]
               .map((p, i) => <div
@@ -101,7 +93,6 @@ class Digit extends React.Component {
         .segment__6 {
           transform: translate(20px, 90px) rotate(-90deg)
         }
-
 
       `}</style>
     </>
