@@ -1,44 +1,74 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# # SEVEN SEGMENT DISPLAY
 
-## Available Scripts
+Display the current time using a seven segment display
 
-In the project directory, you can run:
 
-### `npm start`
+### What is a seven segment display?
+It's a digital screen display system where each character consisits of seven segments (like what you will have seen on calculators)
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+### How do you make it
+When creating this display, the order of the segments is important. Startign with the top left and working clockwise with the last segment being the central spar. 
 
-### `npm test`
+| - | B | - |
+| A | - | C |
+| - | G | - |
+| F | - | D |
+| - | E | - |
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+With this established pattern, we can assign each segment an on/off status for each number, I used a two-dimentional array:
 
-### `npm run build`
+``` javascript
+const patterns = [
+// A  B  C  D  E  F  G
+  [1, 1, 1, 1, 1, 1, 0], // 0
+  [0, 1, 1, 0, 0, 0, 0], // 1
+  [1, 1, 0, 1, 1, 0, 1], // 2
+  [1, 1, 1, 1, 0, 0, 1], // 3
+  [0, 1, 1, 0, 0, 1, 1], // 4
+  [1, 0, 1, 1, 0, 1, 1], // 5
+  [1, 0, 1, 1, 1, 1, 1], // 6
+  [1, 1, 1, 0, 0, 0, 0], // 7
+  [1, 1, 1, 1, 1, 1, 1], // 8
+  [1, 1, 1, 1, 0, 1, 1], // 9
+]
+```
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The component is caled and passed a number prop, this prop is used to retrieve the appropriate pattern from the array above and style each segment accordingly. This component is then used multiple times to build up the clock display
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+ 
+#### The clock
+Using the native JavaScript date function we can extract the values we want to use in our clock:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```javascript
+const d = new Date()
+const time: {
+	hours: d.getHours(),
+	minutes: `0${d.getMinutes()}`.slice(-2),
+	seconds: `0${d.getSeconds()}`.slice(-2),
+}
+```
 
-### `npm run eject`
+Note for the minutes and seconds I convert to string, prefix with zero and call `slice(-2)`  this ensures that I always get a two-digit number displaying in the clock (and prevents number jumping around.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Each of these values are iterated over to create new digits with number props, thus display the current time,
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+A `setInterval` loop is then created to updated these time values every second
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Evolution
+[ ] Use requestAnimationFrame for improved performance
+[ ] UI for user to controlled style options - use local storage to remember preferences
+[x] Flash the dot separators
+[ ] Countdown option
+[ ] Stopwatch option
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+
+
+
+
+
