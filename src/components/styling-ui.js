@@ -163,7 +163,6 @@ class StylingUI extends React.Component {
           display: black;
           width: 100%;
           background: hsla(0, 0, 100%, 0.4);
-          outline: solid 2px lime;
           color: white;
         }
 
@@ -172,7 +171,6 @@ class StylingUI extends React.Component {
         }
 
         .ui__item {
-          outline: solid 1px pink;
           flex: 1 1 auto;
           position: relative;
           display: inline-block;
