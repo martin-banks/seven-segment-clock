@@ -15,7 +15,14 @@ class StylingUI extends React.Component {
         h: 0,
         s: 0,
         l: 0,
-      }
+      },
+      gradientDark: {
+        x: 0,
+        y: 0,
+        h: 0,
+        s: 0,
+        l: 0,
+      },
     }
     this.pickerCursor = React.createRef()
     this.colorPicker = React.createRef()
@@ -23,8 +30,12 @@ class StylingUI extends React.Component {
     this.gradientLight = React.createRef()
     this.gradientLight_cursor = React.createRef()
 
+    this.gradientDark = React.createRef()
+    this.gradientDark_cursor = React.createRef()
+
     this.getColor = this.getColor.bind(this)
     this.getGradientLight = this.getGradientLight.bind(this)
+    this.getGradientDark = this.getGradientDark.bind(this)
   }
 
   getColor (e) {
@@ -59,6 +70,22 @@ class StylingUI extends React.Component {
     this.props.updateBackground({ to: color })
   }
 
+  getGradientDark (e) {
+    const { width: cursorWidth, height: cursorHeight } = this.gradientDark_cursor.current.getBoundingClientRect()
+    const { left, top, width, height } = this.gradientDark.current.getBoundingClientRect()
+    const x = Math.min(width, Math.max(0, e.x - left)) - (cursorWidth / 2)
+    const y = Math.min(height, Math.max(0, e.y - top)) - (cursorHeight / 2)
+    this.setState({
+      gradientDark: { x, y }
+    })
+    const color = {
+      h: Math.floor(x / width * 350),
+      s: 1,
+      l: y / height,
+    }
+    this.props.updateBackground({ from: color })
+  }
+
   componentDidMount () {
     this.colorPicker.current.addEventListener('mousedown', () => {
       this.colorPicker.current.addEventListener('mousemove', this.getColor)
@@ -66,10 +93,14 @@ class StylingUI extends React.Component {
     this.gradientLight.current.addEventListener('mousedown', () => {
       this.gradientLight.current.addEventListener('mousemove', this.getGradientLight)
     })
+    this.gradientDark.current.addEventListener('mousedown', () => {
+      this.gradientDark.current.addEventListener('mousemove', this.getGradientDark)
+    })
 
     window.addEventListener('mouseup', () => {
       this.colorPicker.current.removeEventListener('mousemove', this.getColor)
       this.gradientLight_cursor.current.removeEventListener('mousemove', this.getGradientLight)
+      this.gradientDark_cursor.current.removeEventListener('mousemove', this.getGradientDark)
     })
 
   }
@@ -94,6 +125,16 @@ class StylingUI extends React.Component {
                 ref={ this.gradientLight_cursor }
                 style={{
                   transform: `translate(${this.state.gradientLight.x}px, ${this.state.gradientLight.y}px)`
+                }}
+              ></span>
+            </div>
+
+            <div className="ui__colorPicker" ref={ this.gradientDark }>
+              <span
+                className="ui__picker__cursor"
+                ref={ this.gradientDark_cursor }
+                style={{
+                  transform: `translate(${this.state.gradientDark.x}px, ${this.state.gradientDark.y}px)`
                 }}
               ></span>
             </div>
