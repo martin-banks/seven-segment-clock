@@ -23,12 +23,14 @@ class App extends Component {
       background: {
         from: { h: 210, s: 0, l: 0 },
         to: { h: 210, s: 1, l: 0.1 },
-      }
+      },
+      showUI: false
     }
     this.counter = this.counter.bind(this)
     this.updateDate = this.updateDate.bind(this)
     this.updateColor = this.updateColor.bind(this)
     this.updateBackground = this.updateBackground.bind(this)
+    this.toggleUI = this.toggleUI.bind(this)
   }
 
   updateDate () {
@@ -68,6 +70,10 @@ class App extends Component {
         from: updateFrom
       }
     })
+  }
+
+  toggleUI () {
+    this.setState({ showUI: !this.state.showUI })
   }
 
   componentWillMount () {
@@ -123,10 +129,13 @@ class App extends Component {
                 </>)
             }
           </div>
-          <StylingUI
-            updateColor={ this.updateColor }
-            updateBackground={ this.updateBackground }
-          />
+          <button onClick={ this.toggleUI }>Show controls</button>
+          {
+            this.state.showUI && <StylingUI
+              updateColor={ this.updateColor }
+              updateBackground={ this.updateBackground }
+            />
+          }
         </div>
 
 
