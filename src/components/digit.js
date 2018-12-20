@@ -28,7 +28,10 @@ class Digit extends React.Component {
               .map((p, i) => <div
                   className={ `segment segment__${i}` }
                   key={`segment-${i}`}
-                  style={{ opacity: p ? 0.9 : 0.05 }}
+                  style={{
+                    opacity: p ? 0.9 : 0.05,
+                    background: this.props.color,
+                  }}
                 ></div>
               )
           }

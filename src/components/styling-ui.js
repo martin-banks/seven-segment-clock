@@ -12,19 +12,34 @@ class StylingUI extends React.Component {
     }
     this.pickerCursor = React.createRef()
     this.colorPicker = React.createRef()
+
+    this.getColor = this.getColor.bind(this)
+  }
+
+  getColor (e) {
+    const { width: cursorWidth, height: cursorHeight } = this.pickerCursor.current.getBoundingClientRect()
+      console.log(this.colorPicker)
+      const { left, top, width, height } = this.colorPicker.current.getBoundingClientRect()
+      const x = Math.min(width, Math.max(0, e.x - left)) - (cursorWidth / 2)
+      const y = Math.min(height, Math.max(0, e.y - top)) - (cursorHeight / 2)
+      this.setState({
+        picker: { x, y }
+      })
+      const color = {
+        h: Math.floor(x / width * 350),
+        s: 1,
+        l: y / height,
+      }
+      this.props.updateColor(color)
   }
 
   componentDidMount () {
-    window.addEventListener('mousemove', e => {
-      const { width: cursorWidth, height: cursorHeight } = this.pickerCursor.current.getBoundingClientRect()
-      console.log(this.colorPicker)
-      const { left, top, width, height } = this.colorPicker.current.getBoundingClientRect()
-      this.setState({
-        picker: {
-          x: Math.min(width, Math.max(0, e.x - left)) - (cursorWidth / 2),
-          y: Math.min(height, Math.max(0, e.y - top)) - (cursorHeight / 2),
-        }
-      })
+    window.addEventListener('mousedown', () => {
+      window.addEventListener('mousemove', this.getColor)
+    })
+
+    window.addEventListener('mouseup', () => {
+      window.removeEventListener('mousemove', this.getColor)
     })
 
   }

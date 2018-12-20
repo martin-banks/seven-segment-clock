@@ -14,10 +14,16 @@ class App extends Component {
         hours: 0,
         minutes: 0,
         seconds: 0,
-      }
+      },
+      color: {
+        h: 0,
+        s: 1,
+        l: 0.5,
+      },
     }
     this.counter = this.counter.bind(this)
     this.updateDate = this.updateDate.bind(this)
+    this.updateColor = this.updateColor.bind(this)
   }
 
   updateDate () {
@@ -39,6 +45,12 @@ class App extends Component {
     this.updateDate()
   }
 
+  updateColor ({ h, s, l }) {
+    this.setState({
+      color: { h, s, l }
+    })
+  }
+
   componentWillMount () {
     this.updateDate()
   }
@@ -52,25 +64,35 @@ class App extends Component {
       <div className="App">
         <div className="clock">
           {
-            `${this.state.time.hours}`
-              .split('')
-              .map((n, i) => <Digit key={ `digit-${i}` } number={ parseInt(n, 10) } />)
-          }
-          <span className={ parseInt(this.state.time.seconds, 10) % 2 ? 'show' : 'hide' }>:</span>
-          {
-            `${this.state.time.minutes}`
-              .split('')
-              .map((n, i) => <Digit key={ `digit-${i}` } number={ parseInt(n, 10) } />)
-          }
-          <span className={ parseInt(this.state.time.seconds, 10) % 2 ? 'show' : 'hide' }>:</span>
-          {
-            `${this.state.time.seconds}`
-              .split('')
-              .map((n, i) => <Digit key={ `digit-${i}` } number={ parseInt(n, 10) } />)
+            Object.keys(this.state.time)
+              .map((k, timeIndex) => <>
+                {
+                  timeIndex !== 0 && <span
+                    key={ `tick-${timeIndex}` }
+                    className={ parseInt(this.state.time.seconds, 10) % 2 ? 'show' : 'hide' }
+                  >:</span>
+                }
+                {
+                  `${this.state.time[k]}`
+                    .split('')
+                    .map((n, i) => <>
+                        <Digit
+                          key={ `digit-${i}` }
+                          number={ parseInt(n, 10) }
+                          color={ `hsl(${[
+                            this.state.color.h,
+                            `${this.state.color.s * 100}%`,
+                            `${this.state.color.l * 100}%`,
+                          ].join()}` }
+                        />
+                      </>
+                    )
+                }
+              </>)
           }
         </div>
 
-        <StylingUI />
+        <StylingUI updateColor={ this.updateColor }/>
 
         <style jsx>{`
           .App {
