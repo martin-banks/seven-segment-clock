@@ -113,7 +113,12 @@ class StylingUI extends React.Component {
         <div className="ui__controls">
 
           <div className="ui__item">
-            <input id="show-tick" name="show-tick" type="checkbox" />
+            <input
+              id="show-tick"
+              name="show-tick"
+              type="checkbox"
+              onClick={ this.props.toggleTick }
+            />
             <label htmlFor="show-tick">Show ticks</label>
           </div>
 

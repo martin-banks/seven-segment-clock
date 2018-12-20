@@ -24,13 +24,15 @@ class App extends Component {
         from: { h: 210, s: 0, l: 0 },
         to: { h: 210, s: 1, l: 0.1 },
       },
-      showUI: false
+      showUI: false,
+      tick: false,
     }
     this.counter = this.counter.bind(this)
     this.updateDate = this.updateDate.bind(this)
     this.updateColor = this.updateColor.bind(this)
     this.updateBackground = this.updateBackground.bind(this)
     this.toggleUI = this.toggleUI.bind(this)
+    this.toggleTick = this.toggleTick.bind(this)
   }
 
   updateDate () {
@@ -67,13 +69,17 @@ class App extends Component {
     this.setState({
       background: {
         to: updateTo,
-        from: updateFrom
+        from: updateFrom,
       }
     })
   }
 
   toggleUI () {
     this.setState({ showUI: !this.state.showUI })
+  }
+
+  toggleTick (e) {
+    this.setState({ tick: e.target.checked })
   }
 
   componentWillMount () {
@@ -107,7 +113,12 @@ class App extends Component {
                   {
                     timeIndex !== 0 && <span
                       key={ `tick-${timeIndex}` }
-                      className={ parseInt(this.state.time.seconds, 10) % 2 ? 'show' : 'hide' }
+                      className={
+                        !this.state.tick ? 'show' 
+                          : parseInt(this.state.time.seconds, 10) % 2 
+                            ? 'show' 
+                            : 'hide'
+                      }
                     >:</span>
                   }
                   {
@@ -134,6 +145,7 @@ class App extends Component {
             this.state.showUI && <StylingUI
               updateColor={ this.updateColor }
               updateBackground={ this.updateBackground }
+              toggleTick={ this.toggleTick }
             />
           }
         </div>
