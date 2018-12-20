@@ -20,10 +20,15 @@ class App extends Component {
         s: 1,
         l: 0.5,
       },
+      background: {
+        from: { h: 210, s: 0, l: 0 },
+        to: { h: 210, s: 1, l: 0.1 },
+      }
     }
     this.counter = this.counter.bind(this)
     this.updateDate = this.updateDate.bind(this)
     this.updateColor = this.updateColor.bind(this)
+    this.updateBackground = this.updateBackground.bind(this)
   }
 
   updateDate () {
@@ -51,6 +56,20 @@ class App extends Component {
     })
   }
 
+  updateBackground ({ from, to }) {
+    console.log({ from, to })
+    let updateFrom = this.state.background.from
+    let updateTo = this.state.background.to
+    if (from) updateFrom = from
+    if (to) updateTo = to
+    this.setState({
+      background: {
+        to: updateTo,
+        from: updateFrom
+      }
+    })
+  }
+
   componentWillMount () {
     this.updateDate()
   }
@@ -61,47 +80,70 @@ class App extends Component {
 
   render () {
     return (
-      <div className="App">
-        <div className="clock">
-          {
-            Object.keys(this.state.time)
-              .map((k, timeIndex) => <>
-                {
-                  timeIndex !== 0 && <span
-                    key={ `tick-${timeIndex}` }
-                    className={ parseInt(this.state.time.seconds, 10) % 2 ? 'show' : 'hide' }
-                  >:</span>
-                }
-                {
-                  `${this.state.time[k]}`
-                    .split('')
-                    .map((n, i) => <>
-                        <Digit
-                          key={ `digit-${i}` }
-                          number={ parseInt(n, 10) }
-                          color={ `hsl(${[
-                            this.state.color.h,
-                            `${this.state.color.s * 100}%`,
-                            `${this.state.color.l * 100}%`,
-                          ].join()}` }
-                        />
-                      </>
-                    )
-                }
-              </>)
-          }
+      <div className="App" style={{
+        background: `linear-gradient(
+        hsl(
+          ${this.state.background.from.h},
+          ${this.state.background.from.s * 100}%,
+          ${this.state.background.from.l * 100}%
+        ),
+        hsl(
+          ${this.state.background.to.h},
+          ${this.state.background.to.s * 100}%,
+          ${this.state.background.to.l * 100}%
+        )` }}>
+        <div className="content">
+        
+          <div className="clock">
+            {
+              Object.keys(this.state.time)
+                .map((k, timeIndex) => <>
+                  {
+                    timeIndex !== 0 && <span
+                      key={ `tick-${timeIndex}` }
+                      className={ parseInt(this.state.time.seconds, 10) % 2 ? 'show' : 'hide' }
+                    >:</span>
+                  }
+                  {
+                    `${this.state.time[k]}`
+                      .split('')
+                      .map((n, i) => <>
+                          <Digit
+                            key={ `digit-${i}` }
+                            number={ parseInt(n, 10) }
+                            color={ `hsl(${[
+                              this.state.color.h,
+                              `${this.state.color.s * 100}%`,
+                              `${this.state.color.l * 100}%`,
+                            ].join()}` }
+                          />
+                        </>
+                      )
+                  }
+                </>)
+            }
+          </div>
+          <StylingUI
+            updateColor={ this.updateColor }
+            updateBackground={ this.updateBackground }
+          />
         </div>
 
-        <StylingUI updateColor={ this.updateColor }/>
 
         <style jsx>{`
           .App {
+            min-width: 100vw;
+            min-height: 100vh;
+          }
+          .content {
+            width: 80%;
+            max-width: 1200px;
+            margin: 0 auto;
+          }
+          .clock {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(#111, #333);
           }
 
           span {
