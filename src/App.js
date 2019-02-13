@@ -140,7 +140,12 @@ class App extends Component {
                 </>)
             }
           </div>
-          <button onClick={ this.toggleUI }>{` ${this.state.showUI ? 'Hide' : 'Show' } controls` }</button>
+          <button
+            className="toggleControls"
+            onClick={ this.toggleUI }
+          >
+            {` ${this.state.showUI ? 'Hide' : 'Show' } controls` }
+          </button>
           {
             this.state.showUI && <StylingUI
               updateColor={ this.updateColor }
@@ -182,6 +187,21 @@ class App extends Component {
           }
           .hide {
             opacity: 0;
+          }
+
+          button.toggleControls {
+            transition: opacity 300ms;
+            background: none;
+            padding: 10px 30px;
+            border-radius: 100px;
+            border: solid 1px white;
+            color: white;
+            font-size: 16px;
+            opacity: 0.6;
+            cursor: pointer
+          }
+          button.toggleControls:hover {
+            opacity: 1;
           }
 
         `}</style>
