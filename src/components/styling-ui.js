@@ -87,6 +87,7 @@ class StylingUI extends React.Component {
   }
 
   componentDidMount () {
+    // ! Event handlers not handled correctly
     this.colorPicker.current.addEventListener('mousedown', () => {
       this.colorPicker.current.addEventListener('mousemove', this.getColor)
     })
@@ -98,6 +99,8 @@ class StylingUI extends React.Component {
     })
 
     window.addEventListener('mouseup', () => {
+      // ! Removing event lsiteners throws error
+      // 💀 "Cannot read property 'removeEventListener' of null"
       this.colorPicker.current.removeEventListener('mousemove', this.getColor)
       this.gradientLight_cursor.current.removeEventListener('mousemove', this.getGradientLight)
       this.gradientDark_cursor.current.removeEventListener('mousemove', this.getGradientDark)
@@ -108,7 +111,7 @@ class StylingUI extends React.Component {
   render () {
     return <div className="ui__wrapper">
 
-        <h2>User preferences</h2>
+        <h2>Clock preferences</h2>
 
         <div className="ui__controls">
 
@@ -122,31 +125,36 @@ class StylingUI extends React.Component {
             <label htmlFor="show-tick">Show ticks</label>
           </div>
 
+            <h3 >Background gradient</h3>
           <div className="ui__item">
-            <label htmlFor="">Background colour</label>
-            <div className="ui__colorPicker" ref={ this.gradientLight }>
-              <span
-                className="ui__picker__cursor"
-                ref={ this.gradientLight_cursor }
-                style={{
-                  transform: `translate(${this.state.gradientLight.x}px, ${this.state.gradientLight.y}px)`
-                }}
-              ></span>
+            <div class="ui__item--wrapper">
+              <p>Top</p>
+              <div className="ui__colorPicker" ref={ this.gradientLight }>
+                <span
+                  className="ui__picker__cursor"
+                  ref={ this.gradientLight_cursor }
+                  style={{
+                    transform: `translate(${this.state.gradientLight.x}px, ${this.state.gradientLight.y}px)`
+                  }}
+                  ></span>
+              </div>
             </div>
-
-            <div className="ui__colorPicker" ref={ this.gradientDark }>
-              <span
-                className="ui__picker__cursor"
-                ref={ this.gradientDark_cursor }
-                style={{
-                  transform: `translate(${this.state.gradientDark.x}px, ${this.state.gradientDark.y}px)`
-                }}
-              ></span>
+            <div class="ui__item--wrapper">
+              <p>Bottom</p>
+              <div className="ui__colorPicker" ref={ this.gradientDark }>
+                <span
+                  className="ui__picker__cursor"
+                  ref={ this.gradientDark_cursor }
+                  style={{
+                    transform: `translate(${this.state.gradientDark.x}px, ${this.state.gradientDark.y}px)`
+                  }}
+                ></span>
+              </div>
             </div>
           </div>
 
+          <h3>Clock colour</h3>
           <div className="ui__item">
-            <label htmlFor="">Clock colour</label>
             <div className="ui__colorPicker" ref={ this.colorPicker }>
               <span
                 className="ui__picker__cursor"
@@ -165,7 +173,7 @@ class StylingUI extends React.Component {
 
         .ui__wrapper {
           position: relative;
-          display: black;
+          display: block;
           width: 100%;
           background: hsla(0, 0, 100%, 0.4);
           color: white;
@@ -173,14 +181,19 @@ class StylingUI extends React.Component {
 
         .ui__controls {
           display: flex;
+          flex-direction: column;
         }
 
         .ui__item {
           flex: 1 1 auto;
           position: relative;
-          display: inline-block;
+          display: flex;
           padding: 16px;
           text-align: left;
+        }
+        .ui__item--wrapper {
+          flex: 1 1 0;
+          padding: 0 20px;
         }
 
         .ui__wrapper label {
@@ -190,11 +203,12 @@ class StylingUI extends React.Component {
         }
         .ui__wrapper input + label {
           display: inline-block;
+          width: 30%;
         }
         .ui__colorPicker {
           position: relative;
           width: 100%;
-          height: 150px;
+          height: 100px;
           background-image:
             linear-gradient(hsla(0, 100%, 0%, 1), hsla(0, 100%, 100%, 0), hsla(0, 100%, 100%, 100%)),
             linear-gradient(90deg, hsl(0, 100%, 50%), hsl(50, 100%, 50%), hsl(100, 100%, 50%), hsl(150, 100%, 50%), hsl(200, 100%, 50%), hsl(250, 100%, 50%), hsl(300, 100%, 50%), hsl(350, 100%, 50%))
