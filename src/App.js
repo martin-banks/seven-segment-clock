@@ -140,7 +140,7 @@ class App extends Component {
                 </>)
             }
           </div>
-          <button onClick={ this.toggleUI }>Show controls</button>
+          <button onClick={ this.toggleUI }>{` ${this.state.showUI ? 'Hide' : 'Show' } controls` }</button>
           {
             this.state.showUI && <StylingUI
               updateColor={ this.updateColor }
