@@ -115,18 +115,20 @@ class StylingUI extends React.Component {
 
         <div className="ui__controls">
 
-          <div className="ui__item">
+
+          <div id="toggle-tick" className="ui__item">
+            <h3>Show flashing ticks?</h3>
             <input
-              id="show-tick"
-              name="show-tick"
+              id="toggle-tick-input"
+              name="toggle-tick-input"
               type="checkbox"
               onClick={ this.props.toggleTick }
             />
-            <label htmlFor="show-tick">Show ticks</label>
+            <label htmlFor="toggle-tick-input"></label>
           </div>
 
-            <h3 >Background gradient</h3>
           <div className="ui__item">
+            <h3 >Background gradient</h3>
             <div class="ui__item--wrapper">
               <p>Top</p>
               <div className="ui__colorPicker" ref={ this.gradientLight }>
@@ -153,8 +155,8 @@ class StylingUI extends React.Component {
             </div>
           </div>
 
-          <h3>Clock colour</h3>
           <div className="ui__item">
+            <h3>Clock colour</h3>
             <div className="ui__colorPicker" ref={ this.colorPicker }>
               <span
                 className="ui__picker__cursor"
@@ -170,6 +172,12 @@ class StylingUI extends React.Component {
 
 
       <style jsx>{`
+
+        h3 {
+          text-align: center;
+          margin: 0;
+          margin-bottom: 10px
+        }
 
         .ui__wrapper {
           position: relative;
@@ -188,8 +196,12 @@ class StylingUI extends React.Component {
           flex: 1 1 auto;
           position: relative;
           display: flex;
+          flex-direction: column;
           padding: 16px;
           text-align: left;
+          border: solid 1px rgba(255,255,255, 0.4);
+          border-radius: 12px;
+          margin-bottom: 20px
         }
         .ui__item--wrapper {
           flex: 1 1 0;
@@ -224,8 +236,37 @@ class StylingUI extends React.Component {
           background: white;
           border-radius: 20px;
           padding: 0;
-          z-index: 100
+          z-index: 100;
         }
+
+        #toggle-tick input {
+          display: none;
+        }
+
+        #toggle-tick input + label {
+          padding: 10px 20px;
+          border: solid 1px #bada55;
+          background: rgba(0,0,0,0.6);
+          border-radius: 50px;
+          text-align: center;
+          margin: 0 auto;
+        }
+
+
+        #toggle-tick input:checked + label {
+          border: solid 1px red;
+        }
+
+        #toggle-tick input + label:before {
+          content: 'On';
+          color: #bada55;
+        }
+
+        #toggle-tick input:checked + label:before {
+          content: 'Off';
+          color: red;
+        }
+
       
       `}</style>
     </div>

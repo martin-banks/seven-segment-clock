@@ -24,7 +24,7 @@ class App extends Component {
         from: { h: 210, s: 0, l: 0 },
         to: { h: 210, s: 1, l: 0.1 },
       },
-      showUI: false,
+      showUI: true,
       tick: false,
     }
     this.counter = this.counter.bind(this)
