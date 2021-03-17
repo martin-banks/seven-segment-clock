@@ -99,7 +99,7 @@ class StylingUI extends React.Component {
     })
 
     window.addEventListener('mouseup', () => {
-      // ! Removing event lsiteners throws error
+      // ! Removing event listeners throws error
       // 💀 "Cannot read property 'removeEventListener' of null"
       this.colorPicker.current.removeEventListener('mousemove', this.getColor)
       this.gradientLight_cursor.current.removeEventListener('mousemove', this.getGradientLight)
@@ -129,20 +129,9 @@ class StylingUI extends React.Component {
 
           <div className="ui__item">
             <h3 >Background gradient</h3>
+
             <div class="ui__item--wrapper">
               <p>Top</p>
-              <div className="ui__colorPicker" ref={ this.gradientLight }>
-                <span
-                  className="ui__picker__cursor"
-                  ref={ this.gradientLight_cursor }
-                  style={{
-                    transform: `translate(${this.state.gradientLight.x}px, ${this.state.gradientLight.y}px)`
-                  }}
-                  ></span>
-              </div>
-            </div>
-            <div class="ui__item--wrapper">
-              <p>Bottom</p>
               <div className="ui__colorPicker" ref={ this.gradientDark }>
                 <span
                   className="ui__picker__cursor"
@@ -151,6 +140,19 @@ class StylingUI extends React.Component {
                     transform: `translate(${this.state.gradientDark.x}px, ${this.state.gradientDark.y}px)`
                   }}
                 ></span>
+              </div>
+            </div>
+
+            <div class="ui__item--wrapper">
+              <p>Bottom</p>
+              <div className="ui__colorPicker" ref={ this.gradientLight }>
+                <span
+                  className="ui__picker__cursor"
+                  ref={ this.gradientLight_cursor }
+                  style={{
+                    transform: `translate(${this.state.gradientLight.x}px, ${this.state.gradientLight.y}px)`
+                  }}
+                  ></span>
               </div>
             </div>
           </div>
@@ -183,6 +185,8 @@ class StylingUI extends React.Component {
           position: relative;
           display: block;
           width: 100%;
+          max-width: 500px;
+          margin: 0 auto;
           background: hsla(0, 0, 100%, 0.4);
           color: white;
         }
