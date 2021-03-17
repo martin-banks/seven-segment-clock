@@ -114,10 +114,7 @@ class App extends Component {
                     timeIndex !== 0 && <span
                       key={ `tick-${timeIndex}` }
                       className={
-                        !this.state.tick ? 'show' 
-                          : parseInt(this.state.time.seconds, 10) % 2 
-                            ? 'show' 
-                            : 'hide'
+                        this.state.tick && 'flash'
                       }
                     >:</span>
                   }
@@ -182,11 +179,20 @@ class App extends Component {
             height: 100px;
             padding: 20px
           }
-          .show {
-            opacity: 1;
+
+          @keyframes flashTick {
+            0% {
+              opacity: 1;
+            }
+            50% {
+              opacity: 0;
+            }
+            100% {
+              opacity: 1;
+            }
           }
-          .hide {
-            opacity: 0;
+          .flash {
+            animation: flashTick 1s infinite linear;
           }
 
           button.toggleControls {
